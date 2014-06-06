@@ -2,16 +2,6 @@
 Maven HTMLCompressor Plugin
 ===========================
 
-|endorse|
-
-.. |endorse| image:: http://api.coderwall.com/alextunyk/endorsecount.png
-   :target: http://coderwall.com/alextunyk
-
-:Version: 1.3-SNAPSHOT
-:Keywords: HTML/XML compression, htmlcompressor, Java, Maven plugin
-:Copyright: Alex Tunyk <alex at tunyk.com>
-:License: Apache License version 2.0
-
 Maven HTMLCompressor Plugin allows to compress HTML/XML files by adding a few lines to the pom file. This plugin uses `htmlcompressor <https://code.google.com/p/htmlcompressor>`_ library.
 
 Usage
@@ -26,7 +16,7 @@ The simplest way to start using this plugin is:
             <plugin>
                 <groupId>com.tunyk.mvn.plugins.htmlcompressor</groupId>
                 <artifactId>htmlcompressor-maven-plugin</artifactId>
-                <version>1.3-SNAPSHOT</version>
+                <version>1.4-SNAPSHOT</version>
                 <configuration>
                     <goalPrefix>htmlcompressor</goalPrefix>
                 </configuration>
@@ -49,19 +39,15 @@ The simplest way to start using this plugin is:
 
 5.Check the target/htmlcompressor folder for output.
 
-Here is `demo you can download <https://github.com/TUNYK/htmlcompressor-maven-plugin/downloads>`_
-
-More information about HTML/XML compression plugin configuration at `wiki page <https://github.com/TUNYK/htmlcompressor-maven-plugin/wiki/Configuration>`_:
-
 Source
 """"""
 
-The source code is available on GitHub `htmlcompressor-maven-plugin <https://github.com/TUNYK/htmlcompressor-maven-plugin>`_
+The source code is available on GitHub `htmlcompressor-maven-plugin <https://github.com/allex/htmlcompressor-maven-plugin>`_
 ::
-    git clone https://github.com/TUNYK/htmlcompressor-maven-plugin.git
+    git clone https://github.com/allex/htmlcompressor-maven-plugin.git
 
 Issues tracking
 """""""""""""""
-Issues tracking is available on `GitHub issues <https://github.com/TUNYK/htmlcompressor-maven-plugin/issues>`_
+Issues tracking is available on `GitHub issues <https://github.com/allex/htmlcompressor-maven-plugin/issues>`_
 
 Bug reports, feature requests, and general inquiries welcome.

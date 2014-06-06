@@ -40,286 +40,276 @@ import java.util.regex.PatternSyntaxException;
  *
  * @goal html
  * @author Alex Tunyk <alex at tunyk.com>
+ *
+ * @contributors
+ *
+ *  Allex Wang <allex.wxn@gmail.com> - iallex.com
  */
 public class HtmlCompressorMojo extends AbstractMojo {
 
     /**
      * file where statistics of html compression is stored
      *
-     * @parameter expression="${htmlcompressor.htmlCompressionStatistics}" default-value="${project.build.directory}/htmlcompressor/html-compression-statistics.txt"
+     * @parameter property="htmlcompressor.htmlCompressionStatistics" default-value="${project.build.directory}/htmlcompressor/html-compression-statistics.txt"
      */
     private String htmlCompressionStatistics = "target/htmlcompressor/html-compression-statistics.txt";
 
     /**
      * file types to be processed
      *
-     * @parameter expression="${htmlcompressor.fileExt}"
+     * @parameter property="htmlcompressor.fileExt"
      */
     private String[] fileExt;
     
     /**
      * if false all compression is off (default is true)
      *
-     * @parameter expression="${htmlcompressor.enabled}" default-value="true"
+     * @parameter property="htmlcompressor.enabled" default-value="true"
      */
     private Boolean enabled = true;
 
     /**
      * if false keeps HTML comments (default is true)
      *
-     * @parameter expression="${htmlcompressor.removeComments}" default-value="true"
+     * @parameter property="htmlcompressor.removeComments" default-value="true"
      */
     private Boolean removeComments = true;
 
     /**
      * if false keeps multiple whitespace characters (default is true)
      *
-     * @parameter expression="${htmlcompressor.removeMultiSpaces}" default-value="true"
+     * @parameter property="htmlcompressor.removeMultiSpaces" default-value="true"
      */
     private Boolean removeMultiSpaces = true;
 
     /**
      * removes iter-tag whitespace characters
      *
-     * @parameter expression="${htmlcompressor.removeIntertagSpaces}" default-value="false"
+     * @parameter property="htmlcompressor.removeIntertagSpaces" default-value="false"
      */
     private Boolean removeIntertagSpaces = false;
 
     /**
      * removes unnecessary tag attribute quotes
      *
-     * @parameter expression="${htmlcompressor.removeQuotes}" default-value="false"
+     * @parameter property="htmlcompressor.removeQuotes" default-value="false"
      */
     private Boolean removeQuotes = false;
 
     /**
      * simplify existing doctype
      *
-     * @parameter expression="${htmlcompressor.simpleDoctype}" default-value="false"
+     * @parameter property="htmlcompressor.simpleDoctype" default-value="false"
      */
     private Boolean simpleDoctype = false;
 
     /**
      * remove optional attributes from script tags
      *
-     * @parameter expression="${htmlcompressor.removeScriptAttributes}" default-value="false"
+     * @parameter property="htmlcompressor.removeScriptAttributes" default-value="false"
      */
     private Boolean removeScriptAttributes = false;
 
     /**
      * remove optional attributes from style tags
      *
-     * @parameter expression="${htmlcompressor.removeStyleAttributes}" default-value="false"
+     * @parameter property="htmlcompressor.removeStyleAttributes" default-value="false"
      */
     private Boolean removeStyleAttributes = false;
 
     /**
      * remove optional attributes from link tags
      *
-     * @parameter expression="${htmlcompressor.removeLinkAttributes}" default-value="false"
+     * @parameter property="htmlcompressor.removeLinkAttributes" default-value="false"
      */
     private Boolean removeLinkAttributes = false;
 
     /**
      * remove optional attributes from form tags
      *
-     * @parameter expression="${htmlcompressor.removeFormAttributes}" default-value="false"
+     * @parameter property="htmlcompressor.removeFormAttributes" default-value="false"
      */
     private Boolean removeFormAttributes = false;
 
     /**
      * remove optional attributes from input tags
      *
-     * @parameter expression="${htmlcompressor.removeInputAttributes}" default-value="false"
+     * @parameter property="htmlcompressor.removeInputAttributes" default-value="false"
      */
     private Boolean removeInputAttributes = false;
 
     /**
      * remove values from boolean tag attributes
      *
-     * @parameter expression="${htmlcompressor.simpleBooleanAttributes}" default-value="false"
+     * @parameter property="htmlcompressor.simpleBooleanAttributes" default-value="false"
      */
     private Boolean simpleBooleanAttributes = false;
 
     /**
      * remove "javascript:" from inline event handlers
      *
-     * @parameter expression="${htmlcompressor.removeJavaScriptProtocol}" default-value="false"
+     * @parameter property="htmlcompressor.removeJavaScriptProtocol" default-value="false"
      */
     private Boolean removeJavaScriptProtocol = false;
 
     /**
      * replace "http://" with "//" inside tag attributes
      *
-     * @parameter expression="${htmlcompressor.removeHttpProtocol}" default-value="false"
+     * @parameter property="htmlcompressor.removeHttpProtocol" default-value="false"
      */
     private Boolean removeHttpProtocol = false;
 
     /**
      * replace "https://" with "//" inside tag attributes
      *
-     * @parameter expression="${htmlcompressor.removeHttpsProtocol}" default-value="false"
+     * @parameter property="htmlcompressor.removeHttpsProtocol" default-value="false"
      */
     private Boolean removeHttpsProtocol = false;
 
     /**
      * compress inline css
      *
-     * @parameter expression="${htmlcompressor.compressCss}" default-value="false"
+     * @parameter property="htmlcompressor.compressCss" default-value="false"
      */
     private Boolean compressCss = false;
 
     /**
      * --line-break param for Yahoo YUI Compressor
      *
-     * @parameter expression="${htmlcompressor.yuiCssLineBreak}" default-value="-1"
+     * @parameter property="htmlcompressor.yuiCssLineBreak" default-value="-1"
      */
     private Integer yuiCssLineBreak = -1;
 
     /**
-     * css compressor
-     *
-     * @parameter expression="${htmlcompressor.cssCompressor}" default-value=""
-     */
-    //private Compressor cssCompressor;
-
-    /**
      * compress inline javascript
      *
-     * @parameter expression="${htmlcompressor.compressJavaScript}" default-value="false"
+     * @parameter property="htmlcompressor.compressJavaScript" default-value="false"
      */
     private Boolean compressJavaScript = false;
 
     /**
      * javascript compression: "yui" or "closure"
      *
-     * @parameter expression="${htmlcompressor.jsCompressor}" default-value="yui"
+     * @parameter property="htmlcompressor.jsCompressor" default-value="closure"
      */
-    private String jsCompressor = "yui";
-
-    /**
-     * javascript compression
-     *
-     * @parameter expression="${htmlcompressor.javaScriptCompressor}" default-value=""
-     */
-    //private Compressor javaScriptCompressor; // TODO: provide ability to specify class for javaScriptCompressor param
+    private String jsCompressor = "closure";
 
     /**
      * --nomunge param for Yahoo YUI Compressor
      *
-     * @parameter expression="${htmlcompressor.yuiJsNoMunge}" default-value="false"
+     * @parameter property="htmlcompressor.yuiJsNoMunge" default-value="false"
      */
     private Boolean yuiJsNoMunge = false;
 
     /**
      * --preserve-semi param for Yahoo YUI Compressor
      *
-     * @parameter expression="${htmlcompressor.yuiJsPreserveAllSemiColons}" default-value="false"
+     * @parameter property="htmlcompressor.yuiJsPreserveAllSemiColons" default-value="false"
      */
     private Boolean yuiJsPreserveAllSemiColons = false;
 
     /**
      * --line-break param for Yahoo YUI Compressor
      *
-     * @parameter expression="${htmlcompressor.yuiJsLineBreak}" default-value="-1"
+     * @parameter property="htmlcompressor.yuiJsLineBreak" default-value="-1"
      */
     private Integer yuiJsLineBreak = -1;
 
     /**
      * closureOptLevel = "simple", "advanced" or "whitespace"
      *
-     * @parameter expression="${htmlcompressor.closureOptLevel}" default-value="simple"
+     * @parameter property="htmlcompressor.closureOptLevel" default-value="simple"
      */
     private String closureOptLevel = "simple";
 
     /**
      * --disable-optimizations param for Yahoo YUI Compressor
      *
-     * @parameter expression="${htmlcompressor.yuiJsDisableOptimizations}" default-value="false"
+     * @parameter property="htmlcompressor.yuiJsDisableOptimizations" default-value="false"
      */
     private Boolean yuiJsDisableOptimizations = false;
 
     /**
      * predefined patterns for most often used custom preservation rules: PHP_TAG_PATTERN and SERVER_SCRIPT_TAG_PATTERN.
      *
-     * @parameter expression="${htmlcompressor.predefinedPreservePatterns}"
+     * @parameter property="htmlcompressor.predefinedPreservePatterns"
      */
     private String[] predefinedPreservePatterns;
 
     /**
      * preserve patterns
      *
-     * @parameter expression="${htmlcompressor.preservePatterns}"
+     * @parameter property="htmlcompressor.preservePatterns"
      */
     private String[] preservePatterns;
 
     /**
      * list of files containing preserve patterns
      *
-     * @parameter expression="${htmlcompressor.preservePatternFiles}"
+     * @parameter property="htmlcompressor.preservePatternFiles"
      */
     private File[] preservePatternFiles;
 
     /**
      * HTML compression statistics
      *
-     * @parameter expression="${htmlcompressor.generateStatistics}" default-value="true"
+     * @parameter property="htmlcompressor.generateStatistics" default-value="false"
      */
-    private Boolean generateStatistics = true;
+    private Boolean generateStatistics = false;
 
     /**
      * source folder where html files are located.
      *
-     * @parameter expression="${htmlcompressor.srcFolder}" default-value="${basedir}/src/main/resources/html"
+     * @parameter property="htmlcompressor.srcFolder" default-value="${basedir}/src/main/webapp"
      */
-    private String srcFolder = "src/main/resources/html";
+    private String srcFolder = "src/main/webapp";
 
     /**
      * target folder where compressed html files will be placed.
      *
-     * @parameter expression="${htmlcompressor.targetFolder}" default-value="${project.build.directory}/htmlcompressor/html"
+     * @parameter property="htmlcompressor.targetFolder" default-value="${project.build.directory}/webapp"
      */
-    private String targetFolder = "target/htmlcompressor/html";
+    private String targetFolder = "target/webapp";
 
     /**
      * Create javascript file which includes all compressed html files as json object. If set to true then javascriptHtmlSpriteIntegrationFile param is required, otherwise it will throw exception.
      *
-     * @parameter expression="${htmlcompressor.javascriptHtmlSprite}" default-value="true"
+     * @parameter property="htmlcompressor.javascriptHtmlSprite" default-value="true"
      */
     private Boolean javascriptHtmlSprite = true;
 
     /**
      * JavaScript sprite integration file (first occurrence of "%s" will be substituted by json with all compressed html strings)
      *
-     * @parameter expression="${htmlcompressor.javascriptHtmlSpriteIntegrationFile}" default-value="${basedir}/src/main/resources/html/integration.js"
+     * @parameter property="htmlcompressor.javascriptHtmlSpriteIntegrationFile" default-value="${basedir}/src/main/webapp/integration.js"
      */
-    private String javascriptHtmlSpriteIntegrationFile = "src/main/resources/html/integration.js";
+    private String javascriptHtmlSpriteIntegrationFile = "src/main/webapp/integration.js";
 
     /**
      * The target JavaScript sprite file with compressed html files as json object.
      *
-     * @parameter expression="${htmlcompressor.javascriptHtmlSpriteTargetFile}" default-value="${project.build.directory}/htmlcompressor/html/integration.js"
+     * @parameter property="htmlcompressor.javascriptHtmlSpriteTargetFile" default-value="${project.build.directory}/webapp/integration.js"
      */
-    private String javascriptHtmlSpriteTargetFile = "target/htmlcompressor/html/integration.js";
+    private String javascriptHtmlSpriteTargetFile = "target/webapp/integration.js";
 
     /**
      * Charset encoding for files to read and create
      *
-     * @parameter expression="${htmlcompressor.encoding}" default-value="utf-8"
+     * @parameter property="htmlcompressor.encoding" default-value="utf-8"
      */
     private String encoding = "utf-8";
 
     /**
      * Disable default built-in closure externs.
      *
-     * @parameter expression="${htmlcompressor.closureCustomExternsOnly}" default-value="false"
+     * @parameter property="htmlcompressor.closureCustomExternsOnly" default-value="false"
      */
     private Boolean closureCustomExternsOnly = false;
 
     /**
      * Sets custom closure externs file list.
      *
-     * @parameter expression="${htmlcompressor.closureExterns}"
+     * @parameter property="htmlcompressor.closureExterns"
      */
     private String[] closureExterns;
 
@@ -343,6 +333,7 @@ public class HtmlCompressorMojo extends AbstractMojo {
         htmlCompressorHandler.setRemoveComments(removeComments);
         htmlCompressorHandler.setRemoveMultiSpaces(removeMultiSpaces);
         htmlCompressorHandler.setRemoveIntertagSpaces(removeIntertagSpaces);
+        htmlCompressorHandler.setRemoveSurroundingSpaces("max");
         htmlCompressorHandler.setRemoveQuotes(removeQuotes);
         htmlCompressorHandler.setSimpleDoctype(simpleDoctype);
         htmlCompressorHandler.setRemoveScriptAttributes(removeScriptAttributes);
@@ -435,54 +426,56 @@ public class HtmlCompressorMojo extends AbstractMojo {
             throw new MojoExecutionException(e.getMessage());
         }
 
-        boolean si = true;
+        if (generateStatistics) {
+            boolean si = true;
 
-        // TODO: if no files matched pattern (*.htm or *.html) then this gives NullPointerException
-        int origFilesizeBytes = htmlCompressor.getHtmlCompressor().getStatistics().getOriginalMetrics().getFilesize();
-        String origFilesize = FileTool.humanReadableByteCount(origFilesizeBytes, si);
-        String origEmptyChars = String.valueOf(htmlCompressor.getHtmlCompressor().getStatistics().getOriginalMetrics().getEmptyChars());
-        String origInlineEventSize = FileTool.humanReadableByteCount(htmlCompressor.getHtmlCompressor().getStatistics().getOriginalMetrics().getInlineEventSize(), si);
-        String origInlineScriptSize = FileTool.humanReadableByteCount(htmlCompressor.getHtmlCompressor().getStatistics().getOriginalMetrics().getInlineScriptSize(), si);
-        String origInlineStyleSize = FileTool.humanReadableByteCount(htmlCompressor.getHtmlCompressor().getStatistics().getOriginalMetrics().getInlineStyleSize(), si);
+            // TODO: if no files matched pattern (*.htm or *.html) then this gives NullPointerException
+            int origFilesizeBytes = htmlCompressor.getHtmlCompressor().getStatistics().getOriginalMetrics().getFilesize();
+            String origFilesize = FileTool.humanReadableByteCount(origFilesizeBytes, si);
+            String origEmptyChars = String.valueOf(htmlCompressor.getHtmlCompressor().getStatistics().getOriginalMetrics().getEmptyChars());
+            String origInlineEventSize = FileTool.humanReadableByteCount(htmlCompressor.getHtmlCompressor().getStatistics().getOriginalMetrics().getInlineEventSize(), si);
+            String origInlineScriptSize = FileTool.humanReadableByteCount(htmlCompressor.getHtmlCompressor().getStatistics().getOriginalMetrics().getInlineScriptSize(), si);
+            String origInlineStyleSize = FileTool.humanReadableByteCount(htmlCompressor.getHtmlCompressor().getStatistics().getOriginalMetrics().getInlineStyleSize(), si);
 
-        int compFilesizeBytes = htmlCompressor.getHtmlCompressor().getStatistics().getCompressedMetrics().getFilesize();
-        String compFilesize = FileTool.humanReadableByteCount(compFilesizeBytes, si);
-        String compEmptyChars = String.valueOf(htmlCompressor.getHtmlCompressor().getStatistics().getCompressedMetrics().getEmptyChars());
-        String compInlineEventSize = FileTool.humanReadableByteCount(htmlCompressor.getHtmlCompressor().getStatistics().getCompressedMetrics().getInlineEventSize(), si);
-        String compInlineScriptSize = FileTool.humanReadableByteCount(htmlCompressor.getHtmlCompressor().getStatistics().getCompressedMetrics().getInlineScriptSize(), si);
-        String compInlineStyleSize = FileTool.humanReadableByteCount(htmlCompressor.getHtmlCompressor().getStatistics().getCompressedMetrics().getInlineStyleSize(), si);
+            int compFilesizeBytes = htmlCompressor.getHtmlCompressor().getStatistics().getCompressedMetrics().getFilesize();
+            String compFilesize = FileTool.humanReadableByteCount(compFilesizeBytes, si);
+            String compEmptyChars = String.valueOf(htmlCompressor.getHtmlCompressor().getStatistics().getCompressedMetrics().getEmptyChars());
+            String compInlineEventSize = FileTool.humanReadableByteCount(htmlCompressor.getHtmlCompressor().getStatistics().getCompressedMetrics().getInlineEventSize(), si);
+            String compInlineScriptSize = FileTool.humanReadableByteCount(htmlCompressor.getHtmlCompressor().getStatistics().getCompressedMetrics().getInlineScriptSize(), si);
+            String compInlineStyleSize = FileTool.humanReadableByteCount(htmlCompressor.getHtmlCompressor().getStatistics().getCompressedMetrics().getInlineStyleSize(), si);
 
-        String elapsedTime = FileTool.getElapsedHMSTime(htmlCompressor.getHtmlCompressor().getStatistics().getTime());
-        String preservedSize = FileTool.humanReadableByteCount(htmlCompressor.getHtmlCompressor().getStatistics().getPreservedSize(), si);
-        Float compressionRatio = new Float(compFilesizeBytes) / new Float(origFilesizeBytes);
-        Float spaceSavings = new Float(1) - compressionRatio;
+            String elapsedTime = FileTool.getElapsedHMSTime(htmlCompressor.getHtmlCompressor().getStatistics().getTime());
+            String preservedSize = FileTool.humanReadableByteCount(htmlCompressor.getHtmlCompressor().getStatistics().getPreservedSize(), si);
+            Float compressionRatio = new Float(compFilesizeBytes) / new Float(origFilesizeBytes);
+            Float spaceSavings = new Float(1) - compressionRatio;
 
-        String format = "%-30s%-30s%-30s%-2s";
-        NumberFormat formatter = new DecimalFormat("#0.00");
-        String eol = "\n";
-        String hr = "+-----------------------------+-----------------------------+-----------------------------+";
-        StringBuilder sb = new StringBuilder("HTML compression statistics:").append(eol);
-        sb.append(hr).append(eol);
-        sb.append(String.format(format, "| Category", "| Original", "| Compressed", "|")).append(eol);
-        sb.append(hr).append(eol);
-        sb.append(String.format(format, "| Filesize", "| " + origFilesize, "| " + compFilesize, "|")).append(eol);
-        sb.append(String.format(format, "| Empty Chars", "| " + origEmptyChars, "| " + compEmptyChars, "|")).append(eol);
-        sb.append(String.format(format, "| Script Size", "| " + origInlineScriptSize, "| " + compInlineScriptSize, "|")).append(eol);
-        sb.append(String.format(format, "| Style Size", "| " + origInlineStyleSize, "| " + compInlineStyleSize, "|")).append(eol);
-        sb.append(String.format(format, "| Event Handler Size", "| " + origInlineEventSize, "| " + compInlineEventSize, "|")).append(eol);
-        sb.append(hr).append(eol);
-        sb.append(String.format("%-90s%-2s",
-                String.format("| Time: %s, Preserved: %s, Compression Ratio: %s, Savings: %s%%",
-                        elapsedTime, preservedSize, formatter.format(compressionRatio), formatter.format(spaceSavings*100)),
-                "|")).append(eol);
-        sb.append(hr).append(eol);
+            String format = "%-30s%-30s%-30s%-2s";
+            NumberFormat formatter = new DecimalFormat("#0.00");
+            String eol = "\n";
+            String hr = "+-----------------------------+-----------------------------+-----------------------------+";
+            StringBuilder sb = new StringBuilder("HTML compression statistics:").append(eol);
+            sb.append(hr).append(eol);
+            sb.append(String.format(format, "| Category", "| Original", "| Compressed", "|")).append(eol);
+            sb.append(hr).append(eol);
+            sb.append(String.format(format, "| Filesize", "| " + origFilesize, "| " + compFilesize, "|")).append(eol);
+            sb.append(String.format(format, "| Empty Chars", "| " + origEmptyChars, "| " + compEmptyChars, "|")).append(eol);
+            sb.append(String.format(format, "| Script Size", "| " + origInlineScriptSize, "| " + compInlineScriptSize, "|")).append(eol);
+            sb.append(String.format(format, "| Style Size", "| " + origInlineStyleSize, "| " + compInlineStyleSize, "|")).append(eol);
+            sb.append(String.format(format, "| Event Handler Size", "| " + origInlineEventSize, "| " + compInlineEventSize, "|")).append(eol);
+            sb.append(hr).append(eol);
+            sb.append(String.format("%-90s%-2s",
+                        String.format("| Time: %s, Preserved: %s, Compression Ratio: %s, Savings: %s%%",
+                            elapsedTime, preservedSize, formatter.format(compressionRatio), formatter.format(spaceSavings*100)),
+                        "|")).append(eol);
+            sb.append(hr).append(eol);
 
-        String statistics = sb.toString();
-        getLog().info(statistics);
-        try {
-            FileUtils.writeStringToFile(new File(htmlCompressionStatistics), statistics, encoding);
-        } catch (IOException e) {
-            throw new MojoExecutionException(e.getMessage());
+            String statistics = sb.toString();
+            getLog().info(statistics);
+            try {
+                FileUtils.writeStringToFile(new File(htmlCompressionStatistics), statistics, encoding);
+            } catch (IOException e) {
+                throw new MojoExecutionException(e.getMessage());
+            }
         }
 
         getLog().info("HTML compression completed.");

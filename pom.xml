@@ -2,11 +2,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.sonatype.oss</groupId>
-    <artifactId>oss-parent</artifactId>
-    <version>7</version>
+    <groupId>com.xiaomi</groupId>
+    <artifactId>miliao-rootpom</artifactId>
+    <version>1.5.2</version>
   </parent>
-  
+
   <!-- ====================================================================== -->
   <!-- Basic Information                                                      -->
   <!-- ====================================================================== -->
@@ -14,7 +14,7 @@
   <artifactId>htmlcompressor-maven-plugin</artifactId>
   <version>1.4-SNAPSHOT</version>
   <packaging>maven-plugin</packaging>
-  
+
   <!-- ====================================================================== -->
   <!-- Dependencies                                                           -->
   <!-- ====================================================================== -->
@@ -22,19 +22,17 @@
     <dependency>
       <groupId>com.googlecode.htmlcompressor</groupId>
       <artifactId>htmlcompressor</artifactId>
-      <version>1.5.2</version>
+      <version>allex-dev-1.5.5</version>
     </dependency>
     <dependency>
       <groupId>com.google.javascript</groupId>
       <artifactId>closure-compiler</artifactId>
-      <version>r1043</version>
-      <!-- this is optional due to issue when starting selenium server which is using 1.7.1 and with this dependency it is trying to use 1.8.1 that causes error -->
-      <optional>true</optional>
+      <version>allex-dev-358665e</version>
     </dependency>
     <dependency>
       <groupId>com.yahoo.platform.yui</groupId>
       <artifactId>yuicompressor</artifactId>
-      <version>2.4.6</version>
+      <version>2.4.8</version>
     </dependency>
     <dependency>
       <groupId>javax.servlet.jsp</groupId>
@@ -62,14 +60,14 @@
       <version>3.0.3</version>
     </dependency>
     <dependency>
-        <groupId>org.slf4j</groupId>
-        <artifactId>slf4j-api</artifactId>
-        <version>1.5.10</version>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.5.10</version>
     </dependency>
     <dependency>
-        <groupId>org.slf4j</groupId>
-        <artifactId>slf4j-log4j12</artifactId>
-        <version>1.5.10</version>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>1.5.10</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
@@ -78,7 +76,7 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-  
+
   <!-- ====================================================================== -->
   <!-- Common Properties                                                      -->
   <!-- ====================================================================== -->
@@ -143,7 +141,7 @@
         <version>2.1</version>
         <configuration>
           <mavenExecutorId>forked-path</mavenExecutorId>
-          <connectionUrl>scm:git:ssh://git@github.com/TUNYK/htmlcompressor-maven-plugin.git</connectionUrl>
+          <connectionUrl>scm:git:ssh://git@github.com/allex/htmlcompressor-maven-plugin.git</connectionUrl>
         </configuration>
       </plugin>
     </plugins>
@@ -166,13 +164,13 @@
       </plugin>
     </plugins>
   </reporting>
-  
+
   <!-- ====================================================================== -->
   <!-- More Information                                                       -->
   <!-- ====================================================================== -->
   <name>Maven HTMLCompressor Plugin</name>
   <description>Maven HTMLCompressor Plugin allows to compress html/xml by adding a few lines to the pom file.</description>
-  <url>https://github.com/TUNYK/htmlcompressor-maven-plugin</url>
+  <url>https://github.com/allex/htmlcompressor-maven-plugin</url>
   <inceptionYear>2011</inceptionYear>
   <licenses>
     <license>
@@ -200,21 +198,34 @@
       </roles>
       <timezone>2</timezone>
     </developer>
+    <developer>
+      <id>allex_wang</id>
+      <name>Allex wang</name>
+      <email>allex.wxn@gmail.com</email>
+      <url>http://iallex.com/</url>
+      <organization>IALLEX.COM</organization>
+      <organizationUrl>http://iallex.com/</organizationUrl>
+      <roles>
+        <role>owner</role>
+        <role>developer</role>
+      </roles>
+      <timezone>2</timezone>
+    </developer>
   </developers>
-  
+
   <!-- ====================================================================== -->
   <!-- Environment Settings                                                   -->
   <!-- ====================================================================== -->
   <issueManagement>
     <system>GitHub Issue Tracking</system>
-    <url>https://github.com/TUNYK/htmlcompressor-maven-plugin/issues</url>
+    <url>https://github.com/allex/htmlcompressor-maven-plugin/issues</url>
   </issueManagement>
   <scm>
-    <connection>scm:git:https://github.com/TUNYK/htmlcompressor-maven-plugin.git</connection>
-    <developerConnection>scm:git:ssh://git@github.com/TUNYK/htmlcompressor-maven-plugin.git</developerConnection>
-    <url>https://github.com/TUNYK/htmlcompressor-maven-plugin</url>
+    <connection>scm:git:https://github.com/allex/htmlcompressor-maven-plugin.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/allex/htmlcompressor-maven-plugin.git</developerConnection>
+    <url>https://github.com/allex/htmlcompressor-maven-plugin</url>
   </scm>
-  
+
   <!-- ====================================================================== -->
   <!-- Profile Settings                                                       -->
   <!-- ====================================================================== -->
