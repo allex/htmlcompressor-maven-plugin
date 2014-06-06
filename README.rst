@@ -18,7 +18,20 @@ The simplest way to start using this plugin is:
                 <artifactId>htmlcompressor-maven-plugin</artifactId>
                 <version>1.4-SNAPSHOT</version>
                 <configuration>
-                    <goalPrefix>htmlcompressor</goalPrefix>
+                    <javascriptHtmlSprite>false</javascriptHtmlSprite>
+                    <compressCss>true</compressCss>
+                    <compressJavaScript>true</compressJavaScript>
+                    <srcFolder>${project.basedir}/src/main/webapp</srcFolder>
+                    <targetFolder>${project.build.directory}/${project.artifactId}-${project.version}</targetFolder>
+                    <encoding>utf-8</encoding>
+                    <predefinedPreservePatterns>
+                        <predefinedPreservePattern>SERVER_SCRIPT_TAG_PATTERN</predefinedPreservePattern>
+                    </predefinedPreservePatterns>
+                    <fileExt>
+                        <fileExt>html</fileExt>
+                        <fileExt>jsp</fileExt>
+                        <fileExt>vm</fileExt>
+                    </fileExt>
                 </configuration>
             </plugin>
         </plugins>
