@@ -167,6 +167,13 @@ public class HtmlCompressorMojo extends AbstractMojo {
     private Boolean removeHttpsProtocol = false;
 
     /**
+     * Enables surrounding spaces removal around provided comma separated list of tags.
+     *
+     * @parameter property="htmlcompressor.removeSurroundingSpaces" default-value="max"
+     */
+    private String removeSurroundingSpaces = "max";
+
+    /**
      * compress inline css
      *
      * @parameter property="htmlcompressor.compressCss" default-value="false"
@@ -333,7 +340,7 @@ public class HtmlCompressorMojo extends AbstractMojo {
         htmlCompressorHandler.setRemoveComments(removeComments);
         htmlCompressorHandler.setRemoveMultiSpaces(removeMultiSpaces);
         htmlCompressorHandler.setRemoveIntertagSpaces(removeIntertagSpaces);
-        htmlCompressorHandler.setRemoveSurroundingSpaces("max");
+        htmlCompressorHandler.setRemoveSurroundingSpaces(removeSurroundingSpaces);
         htmlCompressorHandler.setRemoveQuotes(removeQuotes);
         htmlCompressorHandler.setSimpleDoctype(simpleDoctype);
         htmlCompressorHandler.setRemoveScriptAttributes(removeScriptAttributes);
@@ -615,6 +622,14 @@ public class HtmlCompressorMojo extends AbstractMojo {
 
     public void setRemoveHttpsProtocol(Boolean removeHttpsProtocol) {
         this.removeHttpsProtocol = removeHttpsProtocol;
+    }
+
+    public String getRemoveSurroundingSpaces() {
+        return removeSurroundingSpaces;
+    }
+
+    public void setRemoveSurroundingSpaces(String removeSurroundingSpaces) {
+        this.removeSurroundingSpaces = removeSurroundingSpaces;
     }
 
     public Boolean getCompressCss() {
